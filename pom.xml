@@ -29,7 +29,7 @@
     <repository>
       <id>folio-nexus</id>
       <name>FOLIO Maven repository</name>
-      <url>https://repository.folio.org/repository/maven-public</url>
+      <url>https://repository.folio.org/repository/maven-folio</url>
     </repository>
   </repositories>
 
