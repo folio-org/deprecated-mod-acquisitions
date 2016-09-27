@@ -170,12 +170,18 @@ public class InvoiceAPI implements InvoicesResource {
       vertxContext.runOnContext(v -> {
         MongoCRUD.getInstance(vertxContext.owner()).update(Consts.INVOICE_COLLECTION, entity, q,
             reply -> {
-              try {
-                asyncResultHandler.handle(io.vertx.core.Future.succeededFuture(PutInvoicesByInvoiceIdResponse.withNoContent()));
-              } catch (Exception e) {
-                e.printStackTrace();
-                asyncResultHandler.handle(io.vertx.core.Future.succeededFuture(PutInvoicesByInvoiceIdResponse
-                    .withPlainInternalServerError(messages.getMessage(lang, "10001"))));
+              if(reply.succeeded() && reply.result().getDocMatched() == 0){
+                asyncResultHandler.handle(io.vertx.core.Future.succeededFuture(
+                  PutInvoicesByInvoiceIdResponse.withPlainNotFound(invoiceId)));
+              }
+              else{
+                try {
+                  asyncResultHandler.handle(io.vertx.core.Future.succeededFuture(PutInvoicesByInvoiceIdResponse.withNoContent()));
+                } catch (Exception e) {
+                  e.printStackTrace();
+                  asyncResultHandler.handle(io.vertx.core.Future.succeededFuture(PutInvoicesByInvoiceIdResponse
+                      .withPlainInternalServerError(messages.getMessage(lang, "10001"))));
+                }
               }
             });
       });
@@ -374,8 +380,14 @@ public class InvoiceAPI implements InvoicesResource {
           q, reply -> {
               try {
                 if(reply.succeeded()){
-                  asyncResultHandler.handle(io.vertx.core.Future.succeededFuture(
-                    PutInvoicesByInvoiceIdInvoiceLinesByInvoiceLineIdResponse.withNoContent()));
+                  if(reply.result().getDocMatched() == 0){
+                    asyncResultHandler.handle(io.vertx.core.Future.succeededFuture(
+                      PutInvoicesByInvoiceIdInvoiceLinesByInvoiceLineIdResponse.withPlainNotFound(invoiceId + " " + invoiceLineId)));
+                  }
+                  else{
+                    asyncResultHandler.handle(io.vertx.core.Future.succeededFuture(
+                      PutInvoicesByInvoiceIdInvoiceLinesByInvoiceLineIdResponse.withNoContent())); 
+                  }
                 }
                 else{
                   asyncResultHandler.handle(io.vertx.core.Future.succeededFuture(PutInvoicesByInvoiceIdInvoiceLinesByInvoiceLineIdResponse

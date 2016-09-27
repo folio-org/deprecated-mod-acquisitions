@@ -200,6 +200,10 @@ public class VendorsAPI implements VendorsResource {
   private void futurePutVendorByIdOK(Handler<AsyncResult<Response>> async) {
     async.handle(succeededFuture(PutVendorsByVendorIdResponse.withNoContent()));
   }
+  
+  private void futurePutVendorByIdNotFound(Handler<AsyncResult<Response>> async, String entity) {
+    async.handle(succeededFuture(PutVendorsByVendorIdResponse.withPlainNotFound(entity)));
+  }
 
   @Validate
   @Override
@@ -213,10 +217,15 @@ public class VendorsAPI implements VendorsResource {
       vertxContext.runOnContext(v ->
         MongoCRUD.getInstance(vertxContext.owner()).update(Consts.VENDORS_COLLECTION, entity, q,
             reply -> {
-              try {
-                futurePutVendorByIdOK(async);
-              } catch (Exception e) {
-                futurePutVendorsByIdError(e, async, lang);
+              if(reply.succeeded() && reply.result().getDocMatched() == 0){
+                futurePutVendorByIdNotFound(async, vendorId);
+              }
+              else{
+                try {
+                  futurePutVendorByIdOK(async);
+                } catch (Exception e) {
+                  futurePutVendorsByIdError(e, async, lang);
+                }                        
               }
             })
       );

@@ -169,12 +169,18 @@ public class FundsAPI implements FundsResource {
       vertxContext.runOnContext(v -> {
         MongoCRUD.getInstance(vertxContext.owner()).update(Consts.FUNDS_COLLECTION, entity, q,
             reply -> {
-              try {
-                asyncResultHandler.handle(io.vertx.core.Future.succeededFuture(PutFundsByFundIdResponse.withNoContent()));
-              } catch (Exception e) {
-                e.printStackTrace();
-                asyncResultHandler.handle(io.vertx.core.Future.succeededFuture(PutFundsByFundIdResponse
-                    .withPlainInternalServerError(messages.getMessage(lang, "10001"))));
+              if(reply.succeeded() && reply.result().getDocMatched() == 0){
+                asyncResultHandler.handle(io.vertx.core.Future.succeededFuture(PutFundsByFundIdResponse.
+                  withPlainNotFound(fundId)));
+              }
+              else{
+                try {
+                  asyncResultHandler.handle(io.vertx.core.Future.succeededFuture(PutFundsByFundIdResponse.withNoContent()));
+                } catch (Exception e) {
+                  e.printStackTrace();
+                  asyncResultHandler.handle(io.vertx.core.Future.succeededFuture(PutFundsByFundIdResponse
+                      .withPlainInternalServerError(messages.getMessage(lang, "10001"))));
+                }
               }
             });
       });

@@ -166,7 +166,6 @@ public class POLine implements POLinesResource {
       asyncResultHandler.handle(io.vertx.core.Future.succeededFuture(DeletePoLinesByPoLineIdResponse.withPlainInternalServerError(messages
           .getMessage(lang, "10001"))));
     }
-
   }
 
 
@@ -182,12 +181,18 @@ public class POLine implements POLinesResource {
       vertxContext.runOnContext(v -> {
         MongoCRUD.getInstance(vertxContext.owner()).update(Consts.POLINE_COLLECTION, entity, q,
             reply -> {
-              try {
-                asyncResultHandler.handle(io.vertx.core.Future.succeededFuture(PutPoLinesByPoLineIdResponse.withNoContent()));
-              } catch (Exception e) {
-                e.printStackTrace();
-                asyncResultHandler.handle(io.vertx.core.Future.succeededFuture(PutPoLinesByPoLineIdResponse
-                    .withPlainInternalServerError(messages.getMessage(lang, "10001"))));
+              if(reply.succeeded() && reply.result().getDocMatched() == 0){
+                asyncResultHandler.handle(io.vertx.core.Future.succeededFuture(
+                  PutPoLinesByPoLineIdResponse.withPlainNotFound(poLineId)));
+              }
+              else{
+                try {
+                  asyncResultHandler.handle(io.vertx.core.Future.succeededFuture(PutPoLinesByPoLineIdResponse.withNoContent()));
+                } catch (Exception e) {
+                  e.printStackTrace();
+                  asyncResultHandler.handle(io.vertx.core.Future.succeededFuture(PutPoLinesByPoLineIdResponse
+                      .withPlainInternalServerError(messages.getMessage(lang, "10001"))));
+                }
               }
             });
       });
@@ -196,7 +201,5 @@ public class POLine implements POLinesResource {
       asyncResultHandler.handle(io.vertx.core.Future.succeededFuture(PutPoLinesByPoLineIdResponse.withPlainInternalServerError(messages
           .getMessage(lang, "10001"))));
     }
-
   }
-
 }
