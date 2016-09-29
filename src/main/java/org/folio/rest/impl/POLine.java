@@ -8,10 +8,13 @@ import io.vertx.core.AsyncResult;
 import io.vertx.core.Context;
 import io.vertx.core.Handler;
 import io.vertx.core.json.JsonObject;
+import io.vertx.core.logging.Logger;
+import io.vertx.core.logging.LoggerFactory;
 
 import org.folio.rest.annotations.Validate;
 import org.folio.rest.persist.MongoCRUD;
 import org.folio.rest.tools.utils.OutStream;
+import org.folio.rest.tools.messages.MessageConsts;
 import org.folio.rest.tools.messages.Messages;
 import org.folio.rest.jaxrs.model.PoLine;
 import org.folio.rest.jaxrs.model.PoLines;
@@ -20,8 +23,8 @@ import org.folio.rest.utils.Consts;
 
 public class POLine implements POLinesResource {
 
-  private final Messages            messages = Messages.getInstance();
-
+  private final Messages messages  = Messages.getInstance();
+  private static final Logger log  = LoggerFactory.getLogger(POLine.class);
   @Validate
   @Override
   public void getPoLines(String authorization, String query, String orderBy, Order order, int offset, int limit, String lang,
@@ -44,15 +47,15 @@ public class POLine implements POLinesResource {
                 polines.setTotalRecords(polineList.size());
                 asyncResultHandler.handle(io.vertx.core.Future.succeededFuture(GetPoLinesResponse.withJsonOK(polines)));
               } catch (Exception e) {
-                e.printStackTrace();
+                log.error(e);
                 asyncResultHandler.handle(io.vertx.core.Future.succeededFuture(GetPoLinesResponse.withPlainInternalServerError(messages
-                    .getMessage(lang, "10001"))));
+                    .getMessage(lang, MessageConsts.InternalServerError))));
               }
             });
       } catch (Exception e) {
-        e.printStackTrace();
+        log.error(e);
         asyncResultHandler.handle(io.vertx.core.Future.succeededFuture(GetPoLinesResponse.withPlainInternalServerError(messages.getMessage(
-            lang, "10001"))));
+            lang, MessageConsts.InternalServerError))));
       }
     });
   }
@@ -82,21 +85,21 @@ public class POLine implements POLinesResource {
                       asyncResultHandler.handle(io.vertx.core.Future.succeededFuture(PostPoLinesResponse.withJsonCreated(
                           "po_lines/" + id, stream)));
                     } catch (Exception e) {
-                      e.printStackTrace();
+                      log.error(e);
                       asyncResultHandler.handle(io.vertx.core.Future.succeededFuture(PostPoLinesResponse
-                          .withPlainInternalServerError(messages.getMessage(lang, "10001"))));
+                          .withPlainInternalServerError(messages.getMessage(lang, MessageConsts.InternalServerError))));
                     }
                   });
         } catch (Exception e) {
-          e.printStackTrace();
+          log.error(e);
           asyncResultHandler.handle(io.vertx.core.Future.succeededFuture(PostPoLinesResponse.withPlainInternalServerError(messages
-              .getMessage(lang, "10001"))));
+              .getMessage(lang, MessageConsts.InternalServerError))));
         }
       });
     } catch (Exception e) {
-      e.printStackTrace();
+      log.error(e);
       asyncResultHandler.handle(io.vertx.core.Future.succeededFuture(PostPoLinesResponse.withPlainInternalServerError(messages.getMessage(
-          lang, "10001"))));
+          lang, MessageConsts.InternalServerError))));
     }
 
 
@@ -125,16 +128,16 @@ public class POLine implements POLinesResource {
                   asyncResultHandler.handle(io.vertx.core.Future.succeededFuture(GetPoLinesByPoLineIdResponse.withJsonOK(poline.get(0))));
                 }
               } catch (Exception e) {
-                e.printStackTrace();
+                log.error(e);
                 asyncResultHandler.handle(io.vertx.core.Future.succeededFuture(GetPoLinesByPoLineIdResponse
-                    .withPlainInternalServerError(messages.getMessage(lang, "10001"))));
+                    .withPlainInternalServerError(messages.getMessage(lang, MessageConsts.InternalServerError))));
               }
             });
       });
     } catch (Exception e) {
-      e.printStackTrace();
+      log.error(e);
       asyncResultHandler.handle(io.vertx.core.Future.succeededFuture(GetPoLinesByPoLineIdResponse.withPlainInternalServerError(messages
-          .getMessage(lang, "10001"))));
+          .getMessage(lang, MessageConsts.InternalServerError))));
     }
 
   }
@@ -155,16 +158,16 @@ public class POLine implements POLinesResource {
               try {
                 asyncResultHandler.handle(io.vertx.core.Future.succeededFuture(DeletePoLinesByPoLineIdResponse.withNoContent()));
               } catch (Exception e) {
-                e.printStackTrace();
+                log.error(e);
                 asyncResultHandler.handle(io.vertx.core.Future.succeededFuture(DeletePoLinesByPoLineIdResponse
-                    .withPlainInternalServerError(messages.getMessage(lang, "10001"))));
+                    .withPlainInternalServerError(messages.getMessage(lang, MessageConsts.InternalServerError))));
               }
             });
       });
     } catch (Exception e) {
-      e.printStackTrace();
+      log.error(e);
       asyncResultHandler.handle(io.vertx.core.Future.succeededFuture(DeletePoLinesByPoLineIdResponse.withPlainInternalServerError(messages
-          .getMessage(lang, "10001"))));
+          .getMessage(lang, MessageConsts.InternalServerError))));
     }
   }
 
@@ -189,17 +192,17 @@ public class POLine implements POLinesResource {
                 try {
                   asyncResultHandler.handle(io.vertx.core.Future.succeededFuture(PutPoLinesByPoLineIdResponse.withNoContent()));
                 } catch (Exception e) {
-                  e.printStackTrace();
+                  log.error(e);
                   asyncResultHandler.handle(io.vertx.core.Future.succeededFuture(PutPoLinesByPoLineIdResponse
-                      .withPlainInternalServerError(messages.getMessage(lang, "10001"))));
+                      .withPlainInternalServerError(messages.getMessage(lang, MessageConsts.InternalServerError))));
                 }
               }
             });
       });
     } catch (Exception e) {
-      e.printStackTrace();
+      log.error(e);
       asyncResultHandler.handle(io.vertx.core.Future.succeededFuture(PutPoLinesByPoLineIdResponse.withPlainInternalServerError(messages
-          .getMessage(lang, "10001"))));
+          .getMessage(lang, MessageConsts.InternalServerError))));
     }
   }
 }

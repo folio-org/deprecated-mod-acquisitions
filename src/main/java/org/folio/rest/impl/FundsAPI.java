@@ -6,6 +6,8 @@ import io.vertx.core.AsyncResult;
 import io.vertx.core.Context;
 import io.vertx.core.Handler;
 import io.vertx.core.json.JsonObject;
+import io.vertx.core.logging.Logger;
+import io.vertx.core.logging.LoggerFactory;
 
 import javax.ws.rs.core.Response;
 
@@ -16,11 +18,13 @@ import org.folio.rest.jaxrs.resource.FundsResource;
 import org.folio.rest.utils.Consts;
 import org.folio.rest.persist.MongoCRUD;
 import org.folio.rest.tools.utils.OutStream;
+import org.folio.rest.tools.messages.MessageConsts;
 import org.folio.rest.tools.messages.Messages;
 
 public class FundsAPI implements FundsResource {
 
-  private final Messages            messages = Messages.getInstance();
+  private final Messages messages  = Messages.getInstance();
+  private static final Logger log  = LoggerFactory.getLogger(FundsAPI.class);
 
   @Validate
   @Override
@@ -41,15 +45,15 @@ public class FundsAPI implements FundsResource {
                 funds.setTotalRecords(fundObj.size());
                 asyncResultHandler.handle(io.vertx.core.Future.succeededFuture(GetFundsResponse.withJsonOK(funds)));
               } catch (Exception e) {
-                e.printStackTrace();
+                log.error(e);
                 asyncResultHandler.handle(io.vertx.core.Future.succeededFuture(GetFundsResponse.withPlainInternalServerError(messages
-                    .getMessage(lang, "10001"))));
+                    .getMessage(lang, MessageConsts.InternalServerError))));
               }
             });
       } catch (Exception e) {
-        e.printStackTrace();
+        log.error(e);
         asyncResultHandler.handle(io.vertx.core.Future.succeededFuture(GetFundsResponse.withPlainInternalServerError(messages.getMessage(
-            lang, "10001"))));
+            lang, MessageConsts.InternalServerError))));
       }
     });
 
@@ -76,21 +80,21 @@ public class FundsAPI implements FundsResource {
                       asyncResultHandler.handle(io.vertx.core.Future.succeededFuture(PostFundsResponse.withJsonCreated(
                           "funds/" + id, stream)));
                     } catch (Exception e) {
-                      e.printStackTrace();
+                      log.error(e);
                       asyncResultHandler.handle(io.vertx.core.Future.succeededFuture(PostFundsResponse
-                          .withPlainInternalServerError(messages.getMessage(lang, "10001"))));
+                          .withPlainInternalServerError(messages.getMessage(lang, MessageConsts.InternalServerError))));
                     }
                   });
         } catch (Exception e) {
-          e.printStackTrace();
+          log.error(e);
           asyncResultHandler.handle(io.vertx.core.Future.succeededFuture(PostFundsResponse.withPlainInternalServerError(messages
-              .getMessage(lang, "10001"))));
+              .getMessage(lang, MessageConsts.InternalServerError))));
         }
       });
     } catch (Exception e) {
-      e.printStackTrace();
+      log.error(e);
       asyncResultHandler.handle(io.vertx.core.Future.succeededFuture(PostFundsResponse.withPlainInternalServerError(messages.getMessage(
-          lang, "10001"))));
+          lang, MessageConsts.InternalServerError))));
     }
   }
 
@@ -116,16 +120,16 @@ public class FundsAPI implements FundsResource {
                   asyncResultHandler.handle(io.vertx.core.Future.succeededFuture(GetFundsByFundIdResponse.withJsonOK(funds.get(0))));
                 }
               } catch (Exception e) {
-                e.printStackTrace();
+                log.error(e);
                 asyncResultHandler.handle(io.vertx.core.Future.succeededFuture(GetFundsByFundIdResponse
-                    .withPlainInternalServerError(messages.getMessage(lang, "10001"))));
+                    .withPlainInternalServerError(messages.getMessage(lang, MessageConsts.InternalServerError))));
               }
             });
       });
     } catch (Exception e) {
-      e.printStackTrace();
+      log.error(e);
       asyncResultHandler.handle(io.vertx.core.Future.succeededFuture(GetFundsByFundIdResponse.withPlainInternalServerError(messages
-          .getMessage(lang, "10001"))));
+          .getMessage(lang, MessageConsts.InternalServerError))));
     }
   }
 
@@ -144,16 +148,16 @@ public class FundsAPI implements FundsResource {
               try {
                 asyncResultHandler.handle(io.vertx.core.Future.succeededFuture(DeleteFundsByFundIdResponse.withNoContent()));
               } catch (Exception e) {
-                e.printStackTrace();
+                log.error(e);
                 asyncResultHandler.handle(io.vertx.core.Future.succeededFuture(DeleteFundsByFundIdResponse
-                    .withPlainInternalServerError(messages.getMessage(lang, "10001"))));
+                    .withPlainInternalServerError(messages.getMessage(lang, MessageConsts.InternalServerError))));
               }
             });
       });
     } catch (Exception e) {
-      e.printStackTrace();
+      log.error(e);
       asyncResultHandler.handle(io.vertx.core.Future.succeededFuture(DeleteFundsByFundIdResponse.withPlainInternalServerError(messages
-          .getMessage(lang, "10001"))));
+          .getMessage(lang, MessageConsts.InternalServerError))));
     }
   }
 
@@ -177,17 +181,17 @@ public class FundsAPI implements FundsResource {
                 try {
                   asyncResultHandler.handle(io.vertx.core.Future.succeededFuture(PutFundsByFundIdResponse.withNoContent()));
                 } catch (Exception e) {
-                  e.printStackTrace();
+                  log.error(e);
                   asyncResultHandler.handle(io.vertx.core.Future.succeededFuture(PutFundsByFundIdResponse
-                      .withPlainInternalServerError(messages.getMessage(lang, "10001"))));
+                      .withPlainInternalServerError(messages.getMessage(lang, MessageConsts.InternalServerError))));
                 }
               }
             });
       });
     } catch (Exception e) {
-      e.printStackTrace();
+      log.error(e);
       asyncResultHandler.handle(io.vertx.core.Future.succeededFuture(PutFundsByFundIdResponse.withPlainInternalServerError(messages
-          .getMessage(lang, "10001"))));
+          .getMessage(lang, MessageConsts.InternalServerError))));
     }
 
   }

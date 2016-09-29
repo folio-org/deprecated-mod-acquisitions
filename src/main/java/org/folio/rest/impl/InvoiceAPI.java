@@ -6,6 +6,8 @@ import io.vertx.core.AsyncResult;
 import io.vertx.core.Context;
 import io.vertx.core.Handler;
 import io.vertx.core.json.JsonObject;
+import io.vertx.core.logging.Logger;
+import io.vertx.core.logging.LoggerFactory;
 
 import javax.ws.rs.core.Response;
 
@@ -17,14 +19,18 @@ import org.folio.rest.jaxrs.model.Invoices;
 import org.folio.rest.jaxrs.resource.InvoicesResource;
 import org.folio.rest.persist.MongoCRUD;
 import org.folio.rest.tools.utils.OutStream;
+import org.folio.rest.tools.messages.MessageConsts;
 import org.folio.rest.tools.messages.Messages;
 import org.folio.rest.utils.Consts;
 
 public class InvoiceAPI implements InvoicesResource {
 
 
-  private final Messages            messages = Messages.getInstance();
+  private final Messages messages  = Messages.getInstance();
+  private static final Logger log  = LoggerFactory.getLogger(FundsAPI.class);
 
+  private static final String INVOICE_ID_FIELD = "invoice_id";
+  
   @Validate
   @Override
   public void getInvoices(String authorization, String query, String orderBy, Order order, int offset, int limit, String lang,
@@ -43,15 +49,15 @@ public class InvoiceAPI implements InvoicesResource {
                 invoices.setTotalRecords(invoiceObj.size());
                 asyncResultHandler.handle(io.vertx.core.Future.succeededFuture(GetInvoicesResponse.withJsonOK(invoices)));
               } catch (Exception e) {
-                e.printStackTrace();
-                asyncResultHandler.handle(io.vertx.core.Future.succeededFuture(GetInvoicesResponse.withPlainInternalServerError(messages
-                    .getMessage(lang, "10001"))));
+                log.error(e);
+                asyncResultHandler.handle(io.vertx.core.Future.succeededFuture(GetInvoicesResponse
+                  .withPlainInternalServerError(messages.getMessage(lang, MessageConsts.InternalServerError))));
               }
             });
       } catch (Exception e) {
-        e.printStackTrace();
-        asyncResultHandler.handle(io.vertx.core.Future.succeededFuture(GetInvoicesResponse.withPlainInternalServerError(messages.getMessage(
-            lang, "10001"))));
+        log.error(e);
+        asyncResultHandler.handle(io.vertx.core.Future.succeededFuture(GetInvoicesResponse
+          .withPlainInternalServerError(messages.getMessage(lang, MessageConsts.InternalServerError))));
       }
     });
 
@@ -77,21 +83,21 @@ public class InvoiceAPI implements InvoicesResource {
                       asyncResultHandler.handle(io.vertx.core.Future.succeededFuture(PostInvoicesResponse.withJsonCreated(
                           "invoices/" + id, stream)));
                     } catch (Exception e) {
-                      e.printStackTrace();
+                      log.error(e);
                       asyncResultHandler.handle(io.vertx.core.Future.succeededFuture(PostInvoicesResponse
-                          .withPlainInternalServerError(messages.getMessage(lang, "10001"))));
+                          .withPlainInternalServerError(messages.getMessage(lang, MessageConsts.InternalServerError))));
                     }
                   });
         } catch (Exception e) {
-          e.printStackTrace();
+          log.error(e);
           asyncResultHandler.handle(io.vertx.core.Future.succeededFuture(PostInvoicesResponse.withPlainInternalServerError(messages
-              .getMessage(lang, "10001"))));
+              .getMessage(lang, MessageConsts.InternalServerError))));
         }
       });
     } catch (Exception e) {
-      e.printStackTrace();
-      asyncResultHandler.handle(io.vertx.core.Future.succeededFuture(PostInvoicesResponse.withPlainInternalServerError(messages.getMessage(
-          lang, "10001"))));
+      log.error(e);
+      asyncResultHandler.handle(io.vertx.core.Future.succeededFuture(PostInvoicesResponse
+        .withPlainInternalServerError(messages.getMessage(lang, MessageConsts.InternalServerError))));
     }
 
   }
@@ -110,23 +116,24 @@ public class InvoiceAPI implements InvoicesResource {
             reply -> {
               try {
                 List<Invoice> invoice = (List<Invoice>)reply.result();
-                if (invoice.size() == 0) {
-                  asyncResultHandler.handle(io.vertx.core.Future.succeededFuture(GetInvoicesByInvoiceIdResponse.withPlainNotFound("Invoice: "
-                      + messages.getMessage(lang, "10008"))));
+                if (invoice.isEmpty()) {
+                  asyncResultHandler.handle(io.vertx.core.Future.succeededFuture(GetInvoicesByInvoiceIdResponse
+                    .withPlainNotFound("Invoice: " + messages.getMessage(lang, "10008"))));
                 } else {
-                  asyncResultHandler.handle(io.vertx.core.Future.succeededFuture(GetInvoicesByInvoiceIdResponse.withJsonOK(invoice.get(0))));
+                  asyncResultHandler.handle(io.vertx.core.Future.succeededFuture(GetInvoicesByInvoiceIdResponse
+                    .withJsonOK(invoice.get(0))));
                 }
               } catch (Exception e) {
-                e.printStackTrace();
+                log.error(e);
                 asyncResultHandler.handle(io.vertx.core.Future.succeededFuture(GetInvoicesByInvoiceIdResponse
-                    .withPlainInternalServerError(messages.getMessage(lang, "10001"))));
+                    .withPlainInternalServerError(messages.getMessage(lang, MessageConsts.InternalServerError))));
               }
             });
       });
     } catch (Exception e) {
-      e.printStackTrace();
-      asyncResultHandler.handle(io.vertx.core.Future.succeededFuture(GetInvoicesByInvoiceIdResponse.withPlainInternalServerError(messages
-          .getMessage(lang, "10001"))));
+      log.error(e);
+      asyncResultHandler.handle(io.vertx.core.Future.succeededFuture(GetInvoicesByInvoiceIdResponse
+        .withPlainInternalServerError(messages.getMessage(lang, MessageConsts.InternalServerError))));
     }
 
   }
@@ -145,16 +152,16 @@ public class InvoiceAPI implements InvoicesResource {
               try {
                 asyncResultHandler.handle(io.vertx.core.Future.succeededFuture(DeleteInvoicesByInvoiceIdResponse.withNoContent()));
               } catch (Exception e) {
-                e.printStackTrace();
+                log.error(e);
                 asyncResultHandler.handle(io.vertx.core.Future.succeededFuture(DeleteInvoicesByInvoiceIdResponse
-                    .withPlainInternalServerError(messages.getMessage(lang, "10001"))));
+                    .withPlainInternalServerError(messages.getMessage(lang, MessageConsts.InternalServerError))));
               }
             });
       });
     } catch (Exception e) {
-      e.printStackTrace();
-      asyncResultHandler.handle(io.vertx.core.Future.succeededFuture(DeleteInvoicesByInvoiceIdResponse.withPlainInternalServerError(messages
-          .getMessage(lang, "10001"))));
+      log.error(e);
+      asyncResultHandler.handle(io.vertx.core.Future.succeededFuture(DeleteInvoicesByInvoiceIdResponse
+        .withPlainInternalServerError(messages.getMessage(lang, MessageConsts.InternalServerError))));
     }
 
   }
@@ -178,17 +185,17 @@ public class InvoiceAPI implements InvoicesResource {
                 try {
                   asyncResultHandler.handle(io.vertx.core.Future.succeededFuture(PutInvoicesByInvoiceIdResponse.withNoContent()));
                 } catch (Exception e) {
-                  e.printStackTrace();
+                  log.error(e);
                   asyncResultHandler.handle(io.vertx.core.Future.succeededFuture(PutInvoicesByInvoiceIdResponse
-                      .withPlainInternalServerError(messages.getMessage(lang, "10001"))));
+                      .withPlainInternalServerError(messages.getMessage(lang, MessageConsts.InternalServerError))));
                 }
               }
             });
       });
     } catch (Exception e) {
-      e.printStackTrace();
-      asyncResultHandler.handle(io.vertx.core.Future.succeededFuture(PutInvoicesByInvoiceIdResponse.withPlainInternalServerError(messages
-          .getMessage(lang, "10001"))));
+      log.error(e);
+      asyncResultHandler.handle(io.vertx.core.Future.succeededFuture(PutInvoicesByInvoiceIdResponse
+        .withPlainInternalServerError(messages.getMessage(lang, MessageConsts.InternalServerError))));
     }
   }
 
@@ -210,7 +217,7 @@ public class InvoiceAPI implements InvoicesResource {
         if(query != null){
           q = new JsonObject(query);
         }
-        q.put("invoice_id", invoiceId);
+        q.put(INVOICE_ID_FIELD, invoiceId);
         MongoCRUD.getInstance(vertxContext.owner()).get(
           MongoCRUD.buildJson(InvoiceLine.class.getName(), Consts.INVOICE_LINE_COLLECTION, q),
             reply -> {
@@ -219,19 +226,20 @@ public class InvoiceAPI implements InvoicesResource {
                 List<InvoiceLine> invoiceLine = (List<InvoiceLine>)reply.result();
                 lines.setInvoiceLines(invoiceLine);
                 lines.setTotalRecords(invoiceLine.size());
-                asyncResultHandler.handle(io.vertx.core.Future.succeededFuture(GetInvoicesByInvoiceIdInvoiceLinesResponse.withJsonOK(lines)));
+                asyncResultHandler.handle(io.vertx.core.Future.succeededFuture(GetInvoicesByInvoiceIdInvoiceLinesResponse
+                  .withJsonOK(lines)));
 
               } catch (Exception e) {
-                e.printStackTrace();
+                log.error(e);
                 asyncResultHandler.handle(io.vertx.core.Future.succeededFuture(GetInvoicesByInvoiceIdInvoiceLinesResponse
-                    .withPlainInternalServerError(messages.getMessage(lang, "10001"))));
+                    .withPlainInternalServerError(messages.getMessage(lang, MessageConsts.InternalServerError))));
               }
             });
       });
     } catch (Exception e) {
-      e.printStackTrace();
-      asyncResultHandler.handle(io.vertx.core.Future.succeededFuture(GetInvoicesByInvoiceIdInvoiceLinesResponse.withPlainInternalServerError(messages
-          .getMessage(lang, "10001"))));
+      log.error(e);
+      asyncResultHandler.handle(io.vertx.core.Future.succeededFuture(GetInvoicesByInvoiceIdInvoiceLinesResponse
+        .withPlainInternalServerError(messages.getMessage(lang, MessageConsts.InternalServerError))));
     }
   }
 
@@ -259,31 +267,31 @@ public class InvoiceAPI implements InvoicesResource {
                       invoiceLine.setInvoiceId(invoiceId);
                       OutStream stream = new OutStream();
                       stream.setData(invoiceLine);
-                      asyncResultHandler.handle(io.vertx.core.Future.succeededFuture(PostInvoicesByInvoiceIdInvoiceLinesResponse.withJsonCreated(
-                          "invoice_lines/" + invoiceLineId, stream)));
+                      asyncResultHandler.handle(io.vertx.core.Future.succeededFuture(
+                        PostInvoicesByInvoiceIdInvoiceLinesResponse.withJsonCreated("invoice_lines/" + invoiceLineId, stream)));
                     } catch (Exception e) {
-                      e.printStackTrace();
+                      log.error(e);
                       asyncResultHandler.handle(io.vertx.core.Future.succeededFuture(PostInvoicesByInvoiceIdInvoiceLinesResponse
-                          .withPlainInternalServerError(messages.getMessage(lang, "10001"))));
+                          .withPlainInternalServerError(messages.getMessage(lang, MessageConsts.InternalServerError))));
                     }
                   });
         } catch (Exception e) {
-          e.printStackTrace();
-          asyncResultHandler.handle(io.vertx.core.Future.succeededFuture(PostInvoicesByInvoiceIdInvoiceLinesResponse.withPlainInternalServerError(messages
-              .getMessage(lang, "10001"))));
+          log.error(e);
+          asyncResultHandler.handle(io.vertx.core.Future.succeededFuture(PostInvoicesByInvoiceIdInvoiceLinesResponse
+            .withPlainInternalServerError(messages.getMessage(lang, MessageConsts.InternalServerError))));
         }
       });
     } catch (Exception e) {
-      e.printStackTrace();
-      asyncResultHandler.handle(io.vertx.core.Future.succeededFuture(PostInvoicesByInvoiceIdInvoiceLinesResponse.withPlainInternalServerError(messages.getMessage(
-          lang, "10001"))));
+      log.error(e);
+      asyncResultHandler.handle(io.vertx.core.Future.succeededFuture(PostInvoicesByInvoiceIdInvoiceLinesResponse
+        .withPlainInternalServerError(messages.getMessage(lang, MessageConsts.InternalServerError))));
     }
   }
 
   @Validate
   @Override
-  public void getInvoicesByInvoiceIdInvoiceLinesByInvoiceLineId(String invoiceLineId, String invoiceId, String authorization, String lang,
-      Handler<AsyncResult<Response>> asyncResultHandler, Context vertxContext) throws Exception {
+  public void getInvoicesByInvoiceIdInvoiceLinesByInvoiceLineId(String invoiceLineId, String invoiceId, 
+      String authorization, String lang, Handler<AsyncResult<Response>> asyncResultHandler, Context vertxContext) throws Exception {
 
     /**
      * http://HOST:PORT/apis/invoices/{invoiceId}/invoice_lines/{invoiceLineId}
@@ -291,7 +299,7 @@ public class InvoiceAPI implements InvoicesResource {
 
     try {
       JsonObject q = new JsonObject();
-      q.put("invoice_id", invoiceId);
+      q.put(INVOICE_ID_FIELD, invoiceId);
       q.put("_id", invoiceLineId);
       System.out.println("sending... getInvoicesByInvoiceIdInvoiceLines");
       vertxContext.runOnContext(v -> {
@@ -300,22 +308,23 @@ public class InvoiceAPI implements InvoicesResource {
             reply -> {
               try {
                 InvoiceLines lines = new InvoiceLines();
-                List<InvoiceLine> invoiceLine = (List<InvoiceLine>)reply.result();;
+                List<InvoiceLine> invoiceLine = (List<InvoiceLine>)reply.result();
                 lines.setInvoiceLines(invoiceLine);
                 lines.setTotalRecords(invoiceLine.size());
-                asyncResultHandler.handle(io.vertx.core.Future.succeededFuture(GetInvoicesByInvoiceIdInvoiceLinesResponse.withJsonOK(lines)));
+                asyncResultHandler.handle(io.vertx.core.Future.succeededFuture(GetInvoicesByInvoiceIdInvoiceLinesResponse
+                  .withJsonOK(lines)));
 
               } catch (Exception e) {
-                e.printStackTrace();
+                log.error(e);
                 asyncResultHandler.handle(io.vertx.core.Future.succeededFuture(GetInvoicesByInvoiceIdInvoiceLinesResponse
-                    .withPlainInternalServerError(messages.getMessage(lang, "10001"))));
+                    .withPlainInternalServerError(messages.getMessage(lang, MessageConsts.InternalServerError))));
               }
             });
       });
     } catch (Exception e) {
-      e.printStackTrace();
-      asyncResultHandler.handle(io.vertx.core.Future.succeededFuture(GetInvoicesByInvoiceIdInvoiceLinesResponse.withPlainInternalServerError(messages
-          .getMessage(lang, "10001"))));
+      log.error(e);
+      asyncResultHandler.handle(io.vertx.core.Future.succeededFuture(GetInvoicesByInvoiceIdInvoiceLinesResponse
+        .withPlainInternalServerError(messages.getMessage(lang, MessageConsts.InternalServerError))));
     }
 
   }
@@ -331,7 +340,7 @@ public class InvoiceAPI implements InvoicesResource {
 
     try {
       JsonObject q = new JsonObject();
-      q.put("invoice_id", invoiceId);
+      q.put(INVOICE_ID_FIELD, invoiceId);
       q.put("_id", invoiceLineId);
       System.out.println("sending... deleteInvoicesByInvoiceIdInvoiceLinesByInvoiceLineId");
       vertxContext.runOnContext(v -> {
@@ -343,28 +352,32 @@ public class InvoiceAPI implements InvoicesResource {
                     DeleteInvoicesByInvoiceIdInvoiceLinesByInvoiceLineIdResponse.withNoContent()));
                 }
                 else{
-                  asyncResultHandler.handle(io.vertx.core.Future.succeededFuture(DeleteInvoicesByInvoiceIdInvoiceLinesByInvoiceLineIdResponse
-                    .withPlainInternalServerError(messages.getMessage(lang, "10001"))));
+                  asyncResultHandler.handle(io.vertx.core.Future.succeededFuture(
+                    DeleteInvoicesByInvoiceIdInvoiceLinesByInvoiceLineIdResponse
+                    .withPlainInternalServerError(messages.getMessage(lang, MessageConsts.InternalServerError))));
                 }
               } catch (Exception e) {
-                e.printStackTrace();
-                asyncResultHandler.handle(io.vertx.core.Future.succeededFuture(DeleteInvoicesByInvoiceIdInvoiceLinesByInvoiceLineIdResponse
-                    .withPlainInternalServerError(messages.getMessage(lang, "10001"))));
+                log.error(e);
+                asyncResultHandler.handle(io.vertx.core.Future.succeededFuture(
+                  DeleteInvoicesByInvoiceIdInvoiceLinesByInvoiceLineIdResponse
+                    .withPlainInternalServerError(messages.getMessage(lang, MessageConsts.InternalServerError))));
               }
             });
       });
     } catch (Exception e) {
-      e.printStackTrace();
-      asyncResultHandler.handle(io.vertx.core.Future.succeededFuture(DeleteInvoicesByInvoiceIdInvoiceLinesByInvoiceLineIdResponse
-        .withPlainInternalServerError(messages.getMessage(lang, "10001"))));
+      log.error(e);
+      asyncResultHandler.handle(io.vertx.core.Future.succeededFuture(
+        DeleteInvoicesByInvoiceIdInvoiceLinesByInvoiceLineIdResponse
+        .withPlainInternalServerError(messages.getMessage(lang, MessageConsts.InternalServerError))));
     }
   }
 
 
   @Validate
   @Override
-  public void putInvoicesByInvoiceIdInvoiceLinesByInvoiceLineId(String invoiceLineId, String invoiceId, String authorization, String lang,
-      InvoiceLine entity, Handler<AsyncResult<Response>> asyncResultHandler, Context vertxContext) throws Exception {
+  public void putInvoicesByInvoiceIdInvoiceLinesByInvoiceLineId(String invoiceLineId, String invoiceId, 
+      String authorization, String lang, InvoiceLine entity, Handler<AsyncResult<Response>> asyncResultHandler, 
+      Context vertxContext) throws Exception {
 
     /**
      * http://HOST:PORT/apis/invoices/{invoiceId}/invoice_lines/{invoiceLineId}
@@ -372,7 +385,7 @@ public class InvoiceAPI implements InvoicesResource {
 
     try {
       JsonObject q = new JsonObject();
-      q.put("invoice_id", invoiceId);
+      q.put(INVOICE_ID_FIELD, invoiceId);
       q.put("_id", invoiceLineId);
       System.out.println("sending... putInvoicesByInvoiceIdInvoiceLinesByInvoiceLineId");
       vertxContext.runOnContext(v -> {
@@ -390,20 +403,22 @@ public class InvoiceAPI implements InvoicesResource {
                   }
                 }
                 else{
-                  asyncResultHandler.handle(io.vertx.core.Future.succeededFuture(PutInvoicesByInvoiceIdInvoiceLinesByInvoiceLineIdResponse
-                    .withPlainInternalServerError(messages.getMessage(lang, "10001"))));
+                  asyncResultHandler.handle(io.vertx.core.Future.succeededFuture(
+                    PutInvoicesByInvoiceIdInvoiceLinesByInvoiceLineIdResponse
+                    .withPlainInternalServerError(messages.getMessage(lang, MessageConsts.InternalServerError))));
                 }
               } catch (Exception e) {
-                e.printStackTrace();
-                asyncResultHandler.handle(io.vertx.core.Future.succeededFuture(PutInvoicesByInvoiceIdInvoiceLinesByInvoiceLineIdResponse
-                    .withPlainInternalServerError(messages.getMessage(lang, "10001"))));
+                log.error(e);
+                asyncResultHandler.handle(io.vertx.core.Future.succeededFuture(
+                  PutInvoicesByInvoiceIdInvoiceLinesByInvoiceLineIdResponse
+                    .withPlainInternalServerError(messages.getMessage(lang, MessageConsts.InternalServerError))));
               }
             });
       });
     } catch (Exception e) {
-      e.printStackTrace();
+      log.error(e);
       asyncResultHandler.handle(io.vertx.core.Future.succeededFuture(PutInvoicesByInvoiceIdInvoiceLinesByInvoiceLineIdResponse
-        .withPlainInternalServerError(messages.getMessage(lang, "10001"))));
+        .withPlainInternalServerError(messages.getMessage(lang, MessageConsts.InternalServerError))));
     }
 
 
