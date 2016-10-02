@@ -1,0 +1,9 @@
+*.md
+pom.xml
+file-uploads
+src
+!src/main/resources
+target/classes
+target/maven*
+target/surefire-reports
+target/test-classes
