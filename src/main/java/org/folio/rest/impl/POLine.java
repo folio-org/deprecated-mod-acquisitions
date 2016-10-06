@@ -31,7 +31,7 @@ public class POLine implements POLinesResource {
       Handler<AsyncResult<Response>> asyncResultHandler, Context vertxContext) throws Exception {
 
     /**
-     * http://HOST:PORT/apis/po_lines
+     * http://HOST:PORT/po_lines
      */
 
     System.out.println("sending... getPoLines");
@@ -66,7 +66,7 @@ public class POLine implements POLinesResource {
       Context vertxContext) throws Exception {
 
     /**
-     * http://HOST:PORT/apis/po_lines
+     * http://HOST:PORT/po_lines
      */
 
     try {
