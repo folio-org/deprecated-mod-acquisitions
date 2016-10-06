@@ -206,7 +206,7 @@ public class InvoiceAPI implements InvoicesResource {
       int offset, int limit, String lang, Handler<AsyncResult<Response>> asyncResultHandler, Context vertxContext) throws Exception {
 
     /**
-     * http://HOST:PORT/apis/invoices/{invoiceId}/invoice_lines
+     * http://HOST:PORT/invoices/{invoiceId}/invoice_lines
      */
 
     try {
@@ -250,7 +250,7 @@ public class InvoiceAPI implements InvoicesResource {
       Handler<AsyncResult<Response>> asyncResultHandler, Context vertxContext) throws Exception {
 
     /**
-     * http://HOST:PORT/apis/invoices/{invoiceId}/invoice_lines
+     * http://HOST:PORT/invoices/{invoiceId}/invoice_lines
      */
 
     try {
@@ -294,7 +294,7 @@ public class InvoiceAPI implements InvoicesResource {
       String authorization, String lang, Handler<AsyncResult<Response>> asyncResultHandler, Context vertxContext) throws Exception {
 
     /**
-     * http://HOST:PORT/apis/invoices/{invoiceId}/invoice_lines/{invoiceLineId}
+     * http://HOST:PORT/invoices/{invoiceId}/invoice_lines/{invoiceLineId}
      */
 
     try {
@@ -335,7 +335,7 @@ public class InvoiceAPI implements InvoicesResource {
 
 
     /**
-     * http://HOST:PORT/apis/invoices/{invoiceId}/invoice_lines/{invoiceLineId}
+     * http://HOST:PORT/invoices/{invoiceId}/invoice_lines/{invoiceLineId}
      */
 
     try {
@@ -380,7 +380,7 @@ public class InvoiceAPI implements InvoicesResource {
       Context vertxContext) throws Exception {
 
     /**
-     * http://HOST:PORT/apis/invoices/{invoiceId}/invoice_lines/{invoiceLineId}
+     * http://HOST:PORT/invoices/{invoiceId}/invoice_lines/{invoiceLineId}
      */
 
     try {

@@ -61,11 +61,11 @@ Accept: application/json
 
 simple query
 
-http://localhost:8083/apis/invoices
+http://localhost:8083/invoices
 
 query with a filter (mongo syntax)
 
-http://localhost:8083/apis/invoices?query={"$and": [ { "total_amount": { "$lt": 111 } }, { "vendor_contact_person.first_name": "joe" } ]}
+http://localhost:8083/invoices?query={"$and": [ { "total_amount": { "$lt": 111 } }, { "vendor_contact_person.first_name": "joe" } ]}
 ```
 
 
@@ -73,7 +73,7 @@ http://localhost:8083/apis/invoices?query={"$and": [ { "total_amount": { "$lt": 
 
 ```sh
 
-http://localhost:8083/apis/invoices
+http://localhost:8083/invoices
 
 make sure to include appropriate headers as the runtime framework validates them
 
