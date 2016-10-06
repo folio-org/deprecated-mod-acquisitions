@@ -7,28 +7,28 @@
   } ],
   "routingEntries" : [ {
     "methods" : [ "GET", "POST", "DELETE" ],
-    "path" : "/apis/funds",
+    "path" : "/funds",
     "level" : "30",
     "type" : "request-response",
     "permissionsRequired" : [ ],
     "permissionsDesired" : [ ]
   },{
     "methods" : [ "GET", "POST", "DELETE" ],
-    "path" : "/apis/invoices",
+    "path" : "/invoices",
     "level" : "30",
     "type" : "request-response",
     "permissionsRequired" : [ ],
     "permissionsDesired" : [ ]
   },{
     "methods" : [ "GET", "POST", "DELETE" ],
-    "path" : "/apis/po_lines",
+    "path" : "/po_lines",
     "level" : "30",
     "type" : "request-response",
     "permissionsRequired" : [ ],
     "permissionsDesired" : [ ]
   },{
     "methods" : [ "GET", "POST", "DELETE" ],
-    "path" : "/apis/vendors",
+    "path" : "/vendors",
     "level" : "30",
     "type" : "request-response",
     "permissionsRequired" : [ ],
