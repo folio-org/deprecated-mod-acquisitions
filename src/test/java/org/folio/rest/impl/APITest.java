@@ -176,7 +176,7 @@ public class APITest {
 
   @Test
   public void testFunds() throws IOException {
-    path = "/apis/funds";
+    path = "/funds";
     arrayName = "funds";
     String jsonFile = "fund1.json";
 
@@ -210,7 +210,7 @@ public class APITest {
 
   @Test
   public void testInvoices() throws IOException {
-    path = "/apis/invoices";
+    path = "/invoices";
     arrayName = "invoices";
     String jsonFile = "invoice.json";
 
@@ -244,7 +244,7 @@ public class APITest {
 
   @Test
   public void testPoLines() throws IOException {
-    path = "/apis/po_lines";
+    path = "/po_lines";
     arrayName = "po_lines";
     String jsonFile = "poline.json";
 
@@ -278,7 +278,7 @@ public class APITest {
 
   @Test
   public void testVendor() throws IOException {
-    path = "/apis/vendors";
+    path = "/vendors";
     arrayName = "vendors";
     String jsonFile = "vendor.json";
 
