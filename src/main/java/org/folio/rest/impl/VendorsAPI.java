@@ -53,7 +53,7 @@ public class VendorsAPI implements VendorsResource {
 
   @Validate
   @Override
-  public void getVendors(String authorization, String query, String orderBy,
+  public void getVendors(String query, String orderBy,
       Order order, int offset, int limit, String lang,
       Handler<AsyncResult<Response>> async, Context vertxContext)
       throws Exception {
@@ -95,7 +95,7 @@ public class VendorsAPI implements VendorsResource {
 
   @Validate
   @Override
-  public void postVendors(String authorization, String lang, Vendor_ vendor,
+  public void postVendors(String lang, Vendor_ vendor,
       Handler<AsyncResult<Response>> async, Context vertxContext)
       throws Exception {
 
@@ -135,7 +135,7 @@ public class VendorsAPI implements VendorsResource {
 
   @Validate
   @Override
-  public void getVendorsByVendorId(String vendorId, String authorization,
+  public void getVendorsByVendorId(String vendorId,
       String lang, Handler<AsyncResult<Response>> async,
       Context vertxContext) throws Exception {
 
@@ -173,7 +173,7 @@ public class VendorsAPI implements VendorsResource {
 
   @Validate
   @Override
-  public void deleteVendorsByVendorId(String vendorId, String authorization,
+  public void deleteVendorsByVendorId(String vendorId,
       String lang, Handler<AsyncResult<Response>> async,
       Context vertxContext) throws Exception {
     try {
@@ -207,7 +207,7 @@ public class VendorsAPI implements VendorsResource {
 
   @Validate
   @Override
-  public void putVendorsByVendorId(String vendorId, String authorization,
+  public void putVendorsByVendorId(String vendorId,
       String lang, Vendor_ entity,
       Handler<AsyncResult<Response>> async, Context vertxContext)
       throws Exception {

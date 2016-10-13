@@ -27,7 +27,7 @@ public class POLine implements POLinesResource {
   private static final Logger log  = LoggerFactory.getLogger(POLine.class);
   @Validate
   @Override
-  public void getPoLines(String authorization, String query, String orderBy, Order order, int offset, int limit, String lang,
+  public void getPoLines(String query, String orderBy, Order order, int offset, int limit, String lang,
       Handler<AsyncResult<Response>> asyncResultHandler, Context vertxContext) throws Exception {
 
     /**
@@ -62,7 +62,7 @@ public class POLine implements POLinesResource {
 
   @Validate
   @Override
-  public void postPoLines(String authorization, String lang, PoLine poLine, Handler<AsyncResult<Response>> asyncResultHandler,
+  public void postPoLines(String lang, PoLine poLine, Handler<AsyncResult<Response>> asyncResultHandler,
       Context vertxContext) throws Exception {
 
     /**
@@ -108,7 +108,7 @@ public class POLine implements POLinesResource {
 
   @Validate
   @Override
-  public void getPoLinesByPoLineId(String poLineId, String authorization, String lang, Handler<AsyncResult<Response>> asyncResultHandler,
+  public void getPoLinesByPoLineId(String poLineId, String lang, Handler<AsyncResult<Response>> asyncResultHandler,
       Context vertxContext) throws Exception {
 
     try {
@@ -145,7 +145,7 @@ public class POLine implements POLinesResource {
 
   @Validate
   @Override
-  public void deletePoLinesByPoLineId(String poLineId, String authorization, String lang,
+  public void deletePoLinesByPoLineId(String poLineId, String lang,
       Handler<AsyncResult<Response>> asyncResultHandler, Context vertxContext) throws Exception {
 
     try {
@@ -174,7 +174,7 @@ public class POLine implements POLinesResource {
 
   @Validate
   @Override
-  public void putPoLinesByPoLineId(String poLineId, String authorization, String lang, PoLine entity,
+  public void putPoLinesByPoLineId(String poLineId, String lang, PoLine entity,
       Handler<AsyncResult<Response>> asyncResultHandler, Context vertxContext) throws Exception {
 
     try {
