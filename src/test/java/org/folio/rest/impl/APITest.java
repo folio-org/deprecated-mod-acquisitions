@@ -59,7 +59,7 @@ public class APITest {
     RestAssured.config = RestAssured.config().encoderConfig(EncoderConfig.encoderConfig()
         .appendDefaultContentCharsetToContentTypeIfUndefined(false));
     RestAssured.requestSpecification = new RequestSpecBuilder()
-      .addHeader("Authorization", "authtoken")
+      //.addHeader("Authorization", "authtoken")
       .build();
 
     try {
