@@ -1,6 +1,7 @@
 package org.folio.rest.impl;
 
 import java.util.List;
+import java.util.Map;
 
 import javax.ws.rs.core.Response;
 
@@ -28,7 +29,7 @@ public class POLine implements POLinesResource {
   @Validate
   @Override
   public void getPoLines(String query, String orderBy, Order order, int offset, int limit, String lang,
-      Handler<AsyncResult<Response>> asyncResultHandler, Context vertxContext) throws Exception {
+      Map<String, String>okapiHeaders, Handler<AsyncResult<Response>> asyncResultHandler, Context vertxContext) throws Exception {
 
     /**
      * http://HOST:PORT/po_lines
@@ -48,13 +49,15 @@ public class POLine implements POLinesResource {
                 asyncResultHandler.handle(io.vertx.core.Future.succeededFuture(GetPoLinesResponse.withJsonOK(polines)));
               } catch (Exception e) {
                 log.error(e);
-                asyncResultHandler.handle(io.vertx.core.Future.succeededFuture(GetPoLinesResponse.withPlainInternalServerError(messages
+                asyncResultHandler.handle(io.vertx.core.Future.succeededFuture(GetPoLinesResponse
+                  .withPlainInternalServerError(messages
                     .getMessage(lang, MessageConsts.InternalServerError))));
               }
             });
       } catch (Exception e) {
         log.error(e);
-        asyncResultHandler.handle(io.vertx.core.Future.succeededFuture(GetPoLinesResponse.withPlainInternalServerError(messages.getMessage(
+        asyncResultHandler.handle(io.vertx.core.Future.succeededFuture(GetPoLinesResponse
+          .withPlainInternalServerError(messages.getMessage(
             lang, MessageConsts.InternalServerError))));
       }
     });
@@ -62,7 +65,8 @@ public class POLine implements POLinesResource {
 
   @Validate
   @Override
-  public void postPoLines(String lang, PoLine poLine, Handler<AsyncResult<Response>> asyncResultHandler,
+  public void postPoLines(String lang, PoLine poLine, Map<String, String>okapiHeaders,
+      Handler<AsyncResult<Response>> asyncResultHandler,
       Context vertxContext) throws Exception {
 
     /**
@@ -98,7 +102,8 @@ public class POLine implements POLinesResource {
       });
     } catch (Exception e) {
       log.error(e);
-      asyncResultHandler.handle(io.vertx.core.Future.succeededFuture(PostPoLinesResponse.withPlainInternalServerError(messages.getMessage(
+      asyncResultHandler.handle(io.vertx.core.Future.succeededFuture(PostPoLinesResponse
+        .withPlainInternalServerError(messages.getMessage(
           lang, MessageConsts.InternalServerError))));
     }
 
@@ -108,7 +113,8 @@ public class POLine implements POLinesResource {
 
   @Validate
   @Override
-  public void getPoLinesByPoLineId(String poLineId, String lang, Handler<AsyncResult<Response>> asyncResultHandler,
+  public void getPoLinesByPoLineId(String poLineId, String lang, Map<String, String>okapiHeaders,
+      Handler<AsyncResult<Response>> asyncResultHandler,
       Context vertxContext) throws Exception {
 
     try {
@@ -122,10 +128,12 @@ public class POLine implements POLinesResource {
               try {
                 List<PoLine> poline = (List<PoLine>)reply.result();
                 if (poline.size() == 0) {
-                  asyncResultHandler.handle(io.vertx.core.Future.succeededFuture(GetPoLinesByPoLineIdResponse.withPlainNotFound("Invoice: "
+                  asyncResultHandler.handle(io.vertx.core.Future.succeededFuture(GetPoLinesByPoLineIdResponse
+                    .withPlainNotFound("Invoice: "
                       + messages.getMessage(lang, "10008"))));
                 } else {
-                  asyncResultHandler.handle(io.vertx.core.Future.succeededFuture(GetPoLinesByPoLineIdResponse.withJsonOK(poline.get(0))));
+                  asyncResultHandler.handle(io.vertx.core.Future.succeededFuture(GetPoLinesByPoLineIdResponse
+                    .withJsonOK(poline.get(0))));
                 }
               } catch (Exception e) {
                 log.error(e);
@@ -136,7 +144,8 @@ public class POLine implements POLinesResource {
       });
     } catch (Exception e) {
       log.error(e);
-      asyncResultHandler.handle(io.vertx.core.Future.succeededFuture(GetPoLinesByPoLineIdResponse.withPlainInternalServerError(messages
+      asyncResultHandler.handle(io.vertx.core.Future.succeededFuture(GetPoLinesByPoLineIdResponse
+        .withPlainInternalServerError(messages
           .getMessage(lang, MessageConsts.InternalServerError))));
     }
 
@@ -146,7 +155,7 @@ public class POLine implements POLinesResource {
   @Validate
   @Override
   public void deletePoLinesByPoLineId(String poLineId, String lang,
-      Handler<AsyncResult<Response>> asyncResultHandler, Context vertxContext) throws Exception {
+      Map<String, String>okapiHeaders, Handler<AsyncResult<Response>> asyncResultHandler, Context vertxContext) throws Exception {
 
     try {
       JsonObject q = new JsonObject();
@@ -166,7 +175,8 @@ public class POLine implements POLinesResource {
       });
     } catch (Exception e) {
       log.error(e);
-      asyncResultHandler.handle(io.vertx.core.Future.succeededFuture(DeletePoLinesByPoLineIdResponse.withPlainInternalServerError(messages
+      asyncResultHandler.handle(io.vertx.core.Future.succeededFuture(DeletePoLinesByPoLineIdResponse
+        .withPlainInternalServerError(messages
           .getMessage(lang, MessageConsts.InternalServerError))));
     }
   }
@@ -175,7 +185,7 @@ public class POLine implements POLinesResource {
   @Validate
   @Override
   public void putPoLinesByPoLineId(String poLineId, String lang, PoLine entity,
-      Handler<AsyncResult<Response>> asyncResultHandler, Context vertxContext) throws Exception {
+      Map<String, String>okapiHeaders, Handler<AsyncResult<Response>> asyncResultHandler, Context vertxContext) throws Exception {
 
     try {
       JsonObject q = new JsonObject();
@@ -201,7 +211,8 @@ public class POLine implements POLinesResource {
       });
     } catch (Exception e) {
       log.error(e);
-      asyncResultHandler.handle(io.vertx.core.Future.succeededFuture(PutPoLinesByPoLineIdResponse.withPlainInternalServerError(messages
+      asyncResultHandler.handle(io.vertx.core.Future.succeededFuture(PutPoLinesByPoLineIdResponse
+        .withPlainInternalServerError(messages
           .getMessage(lang, MessageConsts.InternalServerError))));
     }
   }

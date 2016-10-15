@@ -1,6 +1,7 @@
 package org.folio.rest.impl;
 
 import java.util.List;
+import java.util.Map;
 
 import io.vertx.core.AsyncResult;
 import io.vertx.core.Context;
@@ -54,7 +55,7 @@ public class VendorsAPI implements VendorsResource {
   @Validate
   @Override
   public void getVendors(String query, String orderBy,
-      Order order, int offset, int limit, String lang,
+      Order order, int offset, int limit, String lang, Map<String, String>okapiHeaders,
       Handler<AsyncResult<Response>> async, Context vertxContext)
       throws Exception {
 
@@ -95,7 +96,7 @@ public class VendorsAPI implements VendorsResource {
 
   @Validate
   @Override
-  public void postVendors(String lang, Vendor_ vendor,
+  public void postVendors(String lang, Vendor_ vendor, Map<String, String>okapiHeaders,
       Handler<AsyncResult<Response>> async, Context vertxContext)
       throws Exception {
 
@@ -136,7 +137,7 @@ public class VendorsAPI implements VendorsResource {
   @Validate
   @Override
   public void getVendorsByVendorId(String vendorId,
-      String lang, Handler<AsyncResult<Response>> async,
+      String lang, Map<String, String>okapiHeaders, Handler<AsyncResult<Response>> async,
       Context vertxContext) throws Exception {
 
     try {
@@ -174,7 +175,7 @@ public class VendorsAPI implements VendorsResource {
   @Validate
   @Override
   public void deleteVendorsByVendorId(String vendorId,
-      String lang, Handler<AsyncResult<Response>> async,
+      String lang, Map<String, String>okapiHeaders, Handler<AsyncResult<Response>> async,
       Context vertxContext) throws Exception {
     try {
       vertxContext.runOnContext(v ->
@@ -208,7 +209,7 @@ public class VendorsAPI implements VendorsResource {
   @Validate
   @Override
   public void putVendorsByVendorId(String vendorId,
-      String lang, Vendor_ entity,
+      String lang, Vendor_ entity, Map<String, String>okapiHeaders,
       Handler<AsyncResult<Response>> async, Context vertxContext)
       throws Exception {
 

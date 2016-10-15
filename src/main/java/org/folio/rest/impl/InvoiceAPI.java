@@ -1,6 +1,7 @@
 package org.folio.rest.impl;
 
 import java.util.List;
+import java.util.Map;
 
 import io.vertx.core.AsyncResult;
 import io.vertx.core.Context;
@@ -34,7 +35,7 @@ public class InvoiceAPI implements InvoicesResource {
   @Validate
   @Override
   public void getInvoices(String query, String orderBy, Order order, int offset, int limit, String lang,
-      Handler<AsyncResult<Response>> asyncResultHandler, Context vertxContext) throws Exception {
+      Map<String, String>okapiHeaders, Handler<AsyncResult<Response>> asyncResultHandler, Context vertxContext) throws Exception {
 
     System.out.println("sending... getInvoices");
     vertxContext.runOnContext(v -> {
@@ -64,7 +65,8 @@ public class InvoiceAPI implements InvoicesResource {
   }
   @Validate
   @Override
-  public void postInvoices(String lang, Invoice invoice, Handler<AsyncResult<Response>> asyncResultHandler,
+  public void postInvoices(String lang, Invoice invoice, Map<String, String>okapiHeaders,
+      Handler<AsyncResult<Response>> asyncResultHandler,
       Context vertxContext) throws Exception {
 
     try {
@@ -104,7 +106,7 @@ public class InvoiceAPI implements InvoicesResource {
   @Validate
   @Override
   public void getInvoicesByInvoiceId(String invoiceId, String lang,
-      Handler<AsyncResult<Response>> asyncResultHandler, Context vertxContext) throws Exception {
+      Map<String, String>okapiHeaders, Handler<AsyncResult<Response>> asyncResultHandler, Context vertxContext) throws Exception {
 
     try {
       JsonObject q = new JsonObject();
@@ -140,7 +142,7 @@ public class InvoiceAPI implements InvoicesResource {
   @Validate
   @Override
   public void deleteInvoicesByInvoiceId(String invoiceId, String lang,
-      Handler<AsyncResult<Response>> asyncResultHandler, Context vertxContext) throws Exception {
+      Map<String, String>okapiHeaders, Handler<AsyncResult<Response>> asyncResultHandler, Context vertxContext) throws Exception {
 
     try {
       JsonObject q = new JsonObject();
@@ -168,7 +170,7 @@ public class InvoiceAPI implements InvoicesResource {
   @Validate
   @Override
   public void putInvoicesByInvoiceId(String invoiceId, String lang, Invoice entity,
-      Handler<AsyncResult<Response>> asyncResultHandler, Context vertxContext) throws Exception {
+      Map<String, String>okapiHeaders, Handler<AsyncResult<Response>> asyncResultHandler, Context vertxContext) throws Exception {
 
     try {
       JsonObject q = new JsonObject();
@@ -203,7 +205,8 @@ public class InvoiceAPI implements InvoicesResource {
   @Validate
   @Override
   public void getInvoicesByInvoiceIdInvoiceLines(String invoiceId, String query, String orderBy, Order order,
-      int offset, int limit, String lang, Handler<AsyncResult<Response>> asyncResultHandler, Context vertxContext) throws Exception {
+      int offset, int limit, String lang, Map<String, String>okapiHeaders,
+      Handler<AsyncResult<Response>> asyncResultHandler, Context vertxContext) throws Exception {
 
     /**
      * http://HOST:PORT/invoices/{invoiceId}/invoice_lines
@@ -247,7 +250,7 @@ public class InvoiceAPI implements InvoicesResource {
   @Override
   public void postInvoicesByInvoiceIdInvoiceLines(
       String invoiceId, String lang, InvoiceLine invoiceLine,
-      Handler<AsyncResult<Response>> asyncResultHandler, Context vertxContext) throws Exception {
+      Map<String, String>okapiHeaders, Handler<AsyncResult<Response>> asyncResultHandler, Context vertxContext) throws Exception {
 
     /**
      * http://HOST:PORT/invoices/{invoiceId}/invoice_lines
@@ -291,7 +294,8 @@ public class InvoiceAPI implements InvoicesResource {
   @Validate
   @Override
   public void getInvoicesByInvoiceIdInvoiceLinesByInvoiceLineId(String invoiceLineId, String invoiceId, 
-      String lang, Handler<AsyncResult<Response>> asyncResultHandler, Context vertxContext) throws Exception {
+      String lang, Map<String, String>okapiHeaders, Handler<AsyncResult<Response>> asyncResultHandler,
+      Context vertxContext) throws Exception {
 
     /**
      * http://HOST:PORT/invoices/{invoiceId}/invoice_lines/{invoiceLineId}
@@ -331,7 +335,8 @@ public class InvoiceAPI implements InvoicesResource {
   @Validate
   @Override
   public void deleteInvoicesByInvoiceIdInvoiceLinesByInvoiceLineId(String invoiceLineId, String invoiceId,
-      String lang, Handler<AsyncResult<Response>> asyncResultHandler, Context vertxContext) throws Exception {
+      String lang, Map<String, String>okapiHeaders, Handler<AsyncResult<Response>> asyncResultHandler,
+      Context vertxContext) throws Exception {
 
 
     /**
@@ -376,7 +381,7 @@ public class InvoiceAPI implements InvoicesResource {
   @Validate
   @Override
   public void putInvoicesByInvoiceIdInvoiceLinesByInvoiceLineId(String invoiceLineId, String invoiceId, 
-      String lang, InvoiceLine entity, Handler<AsyncResult<Response>> asyncResultHandler, 
+      String lang, InvoiceLine entity, Map<String, String>okapiHeaders, Handler<AsyncResult<Response>> asyncResultHandler, 
       Context vertxContext) throws Exception {
 
     /**

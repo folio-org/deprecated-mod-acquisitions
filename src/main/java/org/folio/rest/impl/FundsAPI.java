@@ -1,6 +1,7 @@
 package org.folio.rest.impl;
 
 import java.util.List;
+import java.util.Map;
 
 import io.vertx.core.AsyncResult;
 import io.vertx.core.Context;
@@ -29,7 +30,7 @@ public class FundsAPI implements FundsResource {
   @Validate
   @Override
   public void getFunds(String query, String orderBy, Order order, int offset, int limit, String lang,
-      Handler<AsyncResult<Response>> asyncResultHandler, Context vertxContext) throws Exception {
+      Map<String, String>okapiHeaders, Handler<AsyncResult<Response>> asyncResultHandler, Context vertxContext) throws Exception {
 
     System.out.println("sending... getFunds");
     vertxContext.runOnContext(v -> {
@@ -61,7 +62,7 @@ public class FundsAPI implements FundsResource {
 
   @Validate
   @Override
-  public void postFunds(String lang, Fund fund, Handler<AsyncResult<Response>> asyncResultHandler,
+  public void postFunds(String lang, Fund fund, Map<String, String>okapiHeaders, Handler<AsyncResult<Response>> asyncResultHandler,
       Context vertxContext) throws Exception {
 
     try {
@@ -100,7 +101,8 @@ public class FundsAPI implements FundsResource {
 
   @Validate
   @Override
-  public void getFundsByFundId(String fundId, String lang, Handler<AsyncResult<Response>> asyncResultHandler,
+  public void getFundsByFundId(String fundId, String lang, Map<String, String>okapiHeaders,
+      Handler<AsyncResult<Response>> asyncResultHandler,
       Context vertxContext) throws Exception {
 
     try {
@@ -135,7 +137,8 @@ public class FundsAPI implements FundsResource {
 
   @Validate
   @Override
-  public void deleteFundsByFundId(String fundId, String lang, Handler<AsyncResult<Response>> asyncResultHandler,
+  public void deleteFundsByFundId(String fundId, String lang, Map<String, String>okapiHeaders,
+      Handler<AsyncResult<Response>> asyncResultHandler,
       Context vertxContext) throws Exception {
 
     try {
@@ -164,7 +167,7 @@ public class FundsAPI implements FundsResource {
   @Validate
   @Override
   public void putFundsByFundId(String fundId, String lang, Fund entity,
-      Handler<AsyncResult<Response>> asyncResultHandler, Context vertxContext) throws Exception {
+      Map<String, String>okapiHeaders, Handler<AsyncResult<Response>> asyncResultHandler, Context vertxContext) throws Exception {
 
     try {
       JsonObject q = new JsonObject();
