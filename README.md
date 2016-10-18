@@ -55,9 +55,8 @@ http://localhost:8083/apidocs/index.html?raml=raml/acquisitions/acquisitions.ram
 ```sh
 make sure to include appropriate headers as the runtime framework validates them
 
-Authorization: aaaaa
 Accept: application/json
-
+Content-Type: application/json
 
 simple query
 
