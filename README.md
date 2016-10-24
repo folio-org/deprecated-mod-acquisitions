@@ -26,9 +26,9 @@ Objects / Schemas:
     Purchase Order Lines
     Vendor
 
-Can be run in both embedded mongodb mode or with a regular MongoDB server
+Can be run in both embedded mongodb mode or with a regular MongoDB server.
 
-instructions:
+Instructions:
 
 clone / download the raml-module-builder and `mvn clean install`
 
@@ -39,9 +39,9 @@ Run:
 java -jar acquisitions-fat.jar -Dhttp.port=8083 embed_mongo=true
 
 
-Or via dockerfile
+Or via Dockerfile
 
-note that the embedded mongo is started on a dynamic port chosen at embedded mongo start up - refer to the log ("created embedded mongo config on port 54851")
+Note that the embedded mongo is started on a dynamic port chosen at embedded mongo start up - refer to the log ("created embedded mongo config on port 54851")
 
 
 
@@ -53,16 +53,16 @@ http://localhost:8083/apidocs/index.html?raml=raml/acquisitions/acquisitions.ram
 #### Querying examples:
 
 ```sh
-make sure to include appropriate headers as the runtime framework validates them
+Make sure to include appropriate headers, as the runtime framework validates them.
 
 Accept: application/json
 Content-Type: application/json
 
-simple query
+simple query:
 
 http://localhost:8083/invoices
 
-query with a filter (mongo syntax)
+query with a filter (mongo syntax):
 
 http://localhost:8083/invoices?query={"$and": [ { "total_amount": { "$lt": 111 } }, { "vendor_contact_person.first_name": "joe" } ]}
 ```
@@ -74,7 +74,7 @@ http://localhost:8083/invoices?query={"$and": [ { "total_amount": { "$lt": 111 }
 
 http://localhost:8083/invoices
 
-make sure to include appropriate headers as the runtime framework validates them
+Make sure to include appropriate headers, as the runtime framework validates them.
 
 Authorization: aaaaa
 Accept: application/json
