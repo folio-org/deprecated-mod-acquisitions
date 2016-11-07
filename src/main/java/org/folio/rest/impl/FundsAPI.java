@@ -24,8 +24,8 @@ import org.folio.rest.tools.messages.Messages;
 
 public class FundsAPI implements FundsResource {
 
-  private final Messages messages  = Messages.getInstance();
-  private static final Logger log  = LoggerFactory.getLogger(FundsAPI.class);
+  private static final Logger log = LoggerFactory.getLogger(FundsAPI.class);
+  private final Messages messages = Messages.getInstance();
 
   @Validate
   @Override
