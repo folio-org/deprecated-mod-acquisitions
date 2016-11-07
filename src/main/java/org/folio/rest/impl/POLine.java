@@ -24,8 +24,8 @@ import org.folio.rest.utils.Consts;
 
 public class POLine implements POLinesResource {
 
-  private final Messages messages  = Messages.getInstance();
-  private static final Logger log  = LoggerFactory.getLogger(POLine.class);
+  private static final Logger log = LoggerFactory.getLogger(POLine.class);
+  private final Messages messages = Messages.getInstance();
   @Validate
   @Override
   public void getPoLines(String query, String orderBy, Order order, int offset, int limit, String lang,
