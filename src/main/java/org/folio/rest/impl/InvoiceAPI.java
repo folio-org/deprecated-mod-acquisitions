@@ -26,12 +26,10 @@ import org.folio.rest.utils.Consts;
 
 public class InvoiceAPI implements InvoicesResource {
 
-
-  private final Messages messages  = Messages.getInstance();
-  private static final Logger log  = LoggerFactory.getLogger(FundsAPI.class);
-
+  private static final Logger log = LoggerFactory.getLogger(FundsAPI.class);
   private static final String INVOICE_ID_FIELD = "invoice_id";
-  
+  private final Messages messages = Messages.getInstance();
+
   @Validate
   @Override
   public void getInvoices(String query, String orderBy, Order order, int offset, int limit, String lang,
