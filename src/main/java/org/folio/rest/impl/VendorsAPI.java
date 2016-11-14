@@ -19,7 +19,7 @@ import org.folio.rest.tools.messages.Messages;
 import org.folio.rest.tools.utils.OutStream;
 import org.folio.rest.utils.Consts;
 
-import static io.vertx.core.Future.succeededFuture;
+import io.vertx.core.Future;
 
 public class VendorsAPI implements VendorsResource {
 
@@ -44,12 +44,12 @@ public class VendorsAPI implements VendorsResource {
   }
 
   private void futureGetVendorsOK(Handler<AsyncResult<Response>> async, Vendors vendors) {
-    async.handle(succeededFuture(GetVendorsResponse.withJsonOK(vendors)));
+    async.handle(Future.succeededFuture(GetVendorsResponse.withJsonOK(vendors)));
   }
 
   private void futureGetVendorsError(Exception e, Handler<AsyncResult<Response>> async, String lang) {
     e.printStackTrace();
-    async.handle(succeededFuture(GetVendorsResponse.withPlainInternalServerError(err(lang))));
+    async.handle(Future.succeededFuture(GetVendorsResponse.withPlainInternalServerError(err(lang))));
   }
 
   @Validate
@@ -86,12 +86,12 @@ public class VendorsAPI implements VendorsResource {
     vendor.setId(id);
     OutStream stream = new OutStream();
     stream.setData(vendor);
-    async.handle(succeededFuture(PostVendorsResponse.withJsonCreated("vendors/" + id, stream)));
+    async.handle(Future.succeededFuture(PostVendorsResponse.withJsonCreated("vendors/" + id, stream)));
   }
 
   private void futurePostVendorsError(Exception e, Handler<AsyncResult<Response>> async, String lang) {
     e.printStackTrace();
-    async.handle(succeededFuture(PostVendorsResponse.withPlainInternalServerError(err(lang))));
+    async.handle(Future.succeededFuture(PostVendorsResponse.withPlainInternalServerError(err(lang))));
   }
 
   @Validate
@@ -122,16 +122,16 @@ public class VendorsAPI implements VendorsResource {
   }
 
   private void futureGetVendorByIdOK(Handler<AsyncResult<Response>> async, Vendor_ vendor) {
-    async.handle(succeededFuture(GetVendorsByVendorIdResponse.withJsonOK(vendor)));
+    async.handle(Future.succeededFuture(GetVendorsByVendorIdResponse.withJsonOK(vendor)));
   }
 
   private void futureGetVendorByIdNotFound(Handler<AsyncResult<Response>> async, String lang) {
-    async.handle(succeededFuture(GetVendorsByVendorIdResponse.withPlainNotFound(notFound(lang))));
+    async.handle(Future.succeededFuture(GetVendorsByVendorIdResponse.withPlainNotFound(notFound(lang))));
   }
 
   private void futureGetVendorByIdError(Exception e, Handler<AsyncResult<Response>> async, String lang) {
     e.printStackTrace();
-    async.handle(succeededFuture(GetVendorsByVendorIdResponse.withPlainInternalServerError(err(lang))));
+    async.handle(Future.succeededFuture(GetVendorsByVendorIdResponse.withPlainInternalServerError(err(lang))));
   }
 
   @Validate
@@ -165,11 +165,11 @@ public class VendorsAPI implements VendorsResource {
 
   private void futureDeleteVendorError(Exception e, Handler<AsyncResult<Response>> async, String lang) {
     e.printStackTrace();
-    async.handle(succeededFuture(DeleteVendorsByVendorIdResponse.withPlainInternalServerError(err(lang))));
+    async.handle(Future.succeededFuture(DeleteVendorsByVendorIdResponse.withPlainInternalServerError(err(lang))));
   }
 
   private void futureDeleteVendorOK(Handler<AsyncResult<Response>> async) {
-    async.handle(succeededFuture(DeleteVendorsByVendorIdResponse.withNoContent()));
+    async.handle(Future.succeededFuture(DeleteVendorsByVendorIdResponse.withNoContent()));
   }
 
   @Validate
@@ -195,15 +195,15 @@ public class VendorsAPI implements VendorsResource {
 
   private void futurePutVendorsByIdError(Exception e, Handler<AsyncResult<Response>> async, String lang) {
     e.printStackTrace();
-    async.handle(succeededFuture(PutVendorsByVendorIdResponse.withPlainInternalServerError(err(lang))));
+    async.handle(Future.succeededFuture(PutVendorsByVendorIdResponse.withPlainInternalServerError(err(lang))));
   }
 
   private void futurePutVendorByIdOK(Handler<AsyncResult<Response>> async) {
-    async.handle(succeededFuture(PutVendorsByVendorIdResponse.withNoContent()));
+    async.handle(Future.succeededFuture(PutVendorsByVendorIdResponse.withNoContent()));
   }
-  
+
   private void futurePutVendorByIdNotFound(Handler<AsyncResult<Response>> async, String entity) {
-    async.handle(succeededFuture(PutVendorsByVendorIdResponse.withPlainNotFound(entity)));
+    async.handle(Future.succeededFuture(PutVendorsByVendorIdResponse.withPlainNotFound(entity)));
   }
 
   @Validate
@@ -226,7 +226,7 @@ public class VendorsAPI implements VendorsResource {
                   futurePutVendorByIdOK(async);
                 } catch (Exception e) {
                   futurePutVendorsByIdError(e, async, lang);
-                }                        
+                }
               }
             })
       );
