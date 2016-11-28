@@ -28,7 +28,7 @@ Objects / Schemas:
 
 Can be run in both embedded mongodb mode or with a regular MongoDB server.
 
-Instructions:
+### Instructions
 
 clone / download the raml-module-builder and `mvn clean install`
 
@@ -36,21 +36,21 @@ then do the same for the current project `mvn clean install`
 
 Run:
 
-java -jar acquisitions-fat.jar -Dhttp.port=8083 embed_mongo=true
+java -jar target/acquisitions-fat.jar -Dhttp.port=8083 embed_mongo=true
 
 
 Or via Dockerfile
 
 Note that the embedded mongo is started on a dynamic port chosen at embedded mongo start up - refer to the log ("created embedded mongo config on port 54851")
 
+### Documentation of the Service's APIs
 
-
-#### (see online documentation for additional options - application should be running for documentation to be visible)
+Documentation is auto-generated from the RAML file into HTML.
+After the service is started, the documentation can be viewed at:
 
 http://localhost:8083/apidocs/index.html?raml=raml/acquisitions/acquisitions.raml
 
-
-#### Querying examples:
+#### Querying examples
 
 ```sh
 Make sure to include appropriate headers, as the runtime framework validates them.
