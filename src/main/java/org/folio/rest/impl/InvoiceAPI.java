@@ -291,7 +291,7 @@ public class InvoiceAPI implements InvoicesResource {
 
   @Validate
   @Override
-  public void getInvoicesByInvoiceIdInvoiceLinesByInvoiceLineId(String invoiceLineId, String invoiceId, 
+  public void getInvoicesByInvoiceIdInvoiceLinesByInvoiceLineId(String invoiceLineId, String invoiceId,
       String lang, Map<String, String>okapiHeaders, Handler<AsyncResult<Response>> asyncResultHandler,
       Context vertxContext) throws Exception {
 
@@ -378,8 +378,8 @@ public class InvoiceAPI implements InvoicesResource {
 
   @Validate
   @Override
-  public void putInvoicesByInvoiceIdInvoiceLinesByInvoiceLineId(String invoiceLineId, String invoiceId, 
-      String lang, InvoiceLine entity, Map<String, String>okapiHeaders, Handler<AsyncResult<Response>> asyncResultHandler, 
+  public void putInvoicesByInvoiceIdInvoiceLinesByInvoiceLineId(String invoiceLineId, String invoiceId,
+      String lang, InvoiceLine entity, Map<String, String>okapiHeaders, Handler<AsyncResult<Response>> asyncResultHandler,
       Context vertxContext) throws Exception {
 
     /**
@@ -402,7 +402,7 @@ public class InvoiceAPI implements InvoicesResource {
                   }
                   else{
                     asyncResultHandler.handle(io.vertx.core.Future.succeededFuture(
-                      PutInvoicesByInvoiceIdInvoiceLinesByInvoiceLineIdResponse.withNoContent())); 
+                      PutInvoicesByInvoiceIdInvoiceLinesByInvoiceLineIdResponse.withNoContent()));
                   }
                 }
                 else{
