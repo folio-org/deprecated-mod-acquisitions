@@ -1,5 +1,5 @@
 {
-  "id" : "mod-acquisitions",
+  "id" : "${artifactId}-${version}",
   "name" : "Circulation",
   "provides" : [ {
     "id" : "acquisitions",
