@@ -1,0 +1,41 @@
+{
+  "id" : "mod-acquisitions",
+  "name" : "Circulation",
+  "provides" : [ {
+    "id" : "acquisitions",
+    "version" : "0.1.1"
+  } ],
+  "routingEntries" : [ {
+    "methods" : [ "GET", "POST", "DELETE" ],
+    "path" : "/funds",
+    "level" : "30",
+    "type" : "request-response",
+    "permissionsRequired" : [ ],
+    "permissionsDesired" : [ ]
+  },{
+    "methods" : [ "GET", "POST", "DELETE" ],
+    "path" : "/invoices",
+    "level" : "30",
+    "type" : "request-response",
+    "permissionsRequired" : [ ],
+    "permissionsDesired" : [ ]
+  },{
+    "methods" : [ "GET", "POST", "DELETE" ],
+    "path" : "/po_lines",
+    "level" : "30",
+    "type" : "request-response",
+    "permissionsRequired" : [ ],
+    "permissionsDesired" : [ ]
+  },{
+    "methods" : [ "GET", "POST", "DELETE" ],
+    "path" : "/vendors",
+    "level" : "30",
+    "type" : "request-response",
+    "permissionsRequired" : [ ],
+    "permissionsDesired" : [ ]
+  }],
+  "launchDescriptor" : {
+    "dockerImage" : "mod-acquisitions",
+    "dockerCMD" : [ "embed_mongo=true" ]
+  }
+}
