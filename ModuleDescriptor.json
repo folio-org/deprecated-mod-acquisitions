@@ -1,5 +1,5 @@
 {
-  "id" : "mod-acquisitions",
+  "id" : "mod-acquisitions-0.0.1-SNAPSHOT",
   "name" : "Circulation",
   "provides" : [ {
     "id" : "acquisitions",
