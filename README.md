@@ -36,7 +36,7 @@ then do the same for the current project `mvn clean install`
 
 Run:
 
-java -jar target/acquisitions-fat.jar -Dhttp.port=8083 embed_mongo=true
+java -jar target/mod-acquisitions-fat.jar -Dhttp.port=8083 embed_mongo=true
 
 
 Or via Dockerfile
