@@ -1,0 +1,7 @@
+{
+  "srvcId": "${artifactId}-${version}",
+  "nodeId": "localhost",
+  "descriptor": {
+    "exec": "java -jar target/mod-acquisitions-fat.jar -Dhttp.port=%p embed_mongo=true"
+  }
+}
